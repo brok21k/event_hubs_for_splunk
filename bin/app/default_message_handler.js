@@ -6,7 +6,8 @@
 
     exports.handleMessage = function(message, stanza, eventWriter) {
         var eventTime = Date.parse(message.annotations["x-opt-enqueued-time"])
-        var eventProps = _.extend(message.annotations, message.properties, message.applicationProperties, {data: message.body});
+        var bodyInString = String.fromCharCode.apply(String, message.body);
+        var eventProps = _.extend(message.annotations, message.properties, message.applicationProperties, {data: bodyInString});
         delete eventProps["x-opt-sequence-number"];
         delete eventProps["x-opt-offset"];
         delete eventProps["x-opt-enqueued-time"];
